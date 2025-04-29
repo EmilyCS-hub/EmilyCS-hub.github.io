@@ -83,6 +83,7 @@
       display: inline-block;
       margin: 0 1rem;
       width: 200px;
+      cursor: pointer;
     }
 
     .planet img {
@@ -101,6 +102,44 @@
       color: #eee;
       font-weight: bold;
     }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #1a1a2e;
+      color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+
+    .close-btn {
+      margin-top: 1rem;
+      background: #7b2cbf;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      background-color: #5a189a;
+    }
   </style>
 </head>
 <body>
@@ -114,24 +153,52 @@
     <a href="#gallery">See the Planets</a>
 
     <div class="planet-gallery" id="gallery">
-      <div class="planet">
+      <div class="planet" onclick="showModal('Sun', 'The Sun is the star at the center of the solar system. It provides light and heat to all planets.')">
         <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Solar_sys8.jpg" alt="Sun" />
         <div class="planet-name">Sun</div>
       </div>
-      <div class="planet">
+      <div class="planet" onclick="showModal('Earth', 'Earth is the third planet from the Sun and the only known planet to support life.')">
         <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg" alt="Earth" />
         <div class="planet-name">Earth</div>
       </div>
-      <div class="planet">
+      <div class="planet" onclick="showModal('Jupiter', 'Jupiter is the largest planet in the solar system, known for its Great Red Spot.')">
         <img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/Jupiter.jpg" alt="Jupiter" />
         <div class="planet-name">Jupiter</div>
       </div>
-      <div class="planet">
+      <div class="planet" onclick="showModal('Saturn', 'Saturn is famous for its beautiful ring system made of ice and rock particles.')">
         <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Saturn_during_Equinox.jpg" alt="Saturn" />
         <div class="planet-name">Saturn</div>
       </div>
     </div>
   </div>
+
+  <!-- Modal Popup -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <h2 id="modal-title"></h2>
+      <p id="modal-text"></p>
+      <button class="close-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    function showModal(title, text) {
+      document.getElementById("modal-title").textContent = title;
+      document.getElementById("modal-text").textContent = text;
+      document.getElementById("modal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    // Optional: Close modal if user clicks outside content
+    window.onclick = function(event) {
+      const modal = document.getElementById("modal");
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
+  </script>
 </body>
 </html>
-
