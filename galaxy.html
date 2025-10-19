@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Emily's Galaxy</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body, html {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .stars, .stars2, .stars3 {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: transparent url('https://raw.githubusercontent.com/EmilyCS-hub/EmilyCS-hub.github.io/main/stars.png') repeat;
+      animation: moveStars 200s linear infinite;
+      z-index: 0;
+    }
+
+    .stars2 {
+      background-image: url('https://raw.githubusercontent.com/EmilyCS-hub/EmilyCS-hub.github.io/main/stars2.png');
+      animation-duration: 300s;
+    }
+
+    .stars3 {
+      background-image: url('https://raw.githubusercontent.com/EmilyCS-hub/EmilyCS-hub.github.io/main/stars3.png');
+      animation-duration: 500s;
+    }
+
+    @keyframes moveStars {
+      from { transform: translateY(0); }
+      to { transform: translateY(-1000px); }
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3em;
+      color: #ffe9c6;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.2em;
+      color: #ccc;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.6rem 1.5rem;
+      background-color: #7b2cbf;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    a:hover {
+      background-color: #5a189a;
+    }
+
+    .planet-gallery {
+      margin-top: 4rem;
+      overflow-x: auto;
+      white-space: nowrap;
+      padding: 2rem;
+    }
+
+    .planet {
+      display: inline-block;
+      margin: 0 1rem;
+      width: 200px;
+      cursor: pointer;
+    }
+
+    .planet img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .planet img:hover {
+      transform: scale(1.1);
+    }
+
+    .planet-name {
+      margin-top: 0.5rem;
+      color: #eee;
+      font-weight: bold;
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #1a1a2e;
+      color: white;
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+
+    .close-btn {
+      margin-top: 1rem;
+      background: #7b2cbf;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      background-color: #5a189a;
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="stars2"></div>
+  <div class="stars3"></div>
+
+  <div class="content">
+    <h1>Welcome to Emily's Galaxy</h1>
+    <p>Exploring the stars, one planet at a time.</p>
+    <a href="#gallery">See the Planets</a>
+
+    <div class="planet-gallery" id="gallery">
+      <div class="planet" onclick="showModal('Sun', 'The Sun is the star at the center of the solar system. It provides light and heat to all planets.')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Solar_sys8.jpg" alt="Sun" />
+        <div class="planet-name">Sun</div>
+      </div>
+      <div class="planet" onclick="showModal('Earth', 'Earth is the third planet from the Sun and the only known planet to support life.')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg" alt="Earth" />
+        <div class="planet-name">Earth</div>
+      </div>
+      <div class="planet" onclick="showModal('Jupiter', 'Jupiter is the largest planet in the solar system, known for its Great Red Spot.')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/Jupiter.jpg" alt="Jupiter" />
+        <div class="planet-name">Jupiter</div>
+      </div>
+      <div class="planet" onclick="showModal('Saturn', 'Saturn is famous for its beautiful ring system made of ice and rock particles.')">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Saturn_during_Equinox.jpg" alt="Saturn" />
+        <div class="planet-name">Saturn</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Popup -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <h2 id="modal-title"></h2>
+      <p id="modal-text"></p>
+      <button class="close-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <script>
+    function showModal(title, text) {
+      document.getElementById("modal-title").textContent = title;
+      document.getElementById("modal-text").textContent = text;
+      document.getElementById("modal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    // Optional: Close modal if user clicks outside content
+    window.onclick = function(event) {
+      const modal = document.getElementById("modal");
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
+  </script>
+</body>
+</html>
