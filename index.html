@@ -2,220 +2,1047 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Emily's Galaxy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Not One Less — A Voice-First AI Assistant for Accessible Digital Tasks</title>
+  <meta name="description" content="Not One Less (NOLA) is a voice-first, privacy-aware, multilingual AI assistant that helps seniors and people with disabilities complete everyday digital tasks independently. A BASEF 2026 award-winning project by Emily Sun." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --bg: #fdfaf5;
+      --surface: #ffffff;
+      --ink: #23212b;
+      --muted: #5f5a6b;
+      --teal: #226b67;
+      --teal-dark: #1a534f;
+      --teal-soft: #e7f2f1;
+      --coral: #e07856;
+      --coral-soft: #fbe9e2;
+      --amber: #e6a23c;
+      --border: #ece6dd;
+      --shadow: 0 1px 2px rgba(35, 33, 43, 0.05), 0 8px 24px rgba(35, 33, 43, 0.06);
+      --radius: 16px;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body, html {
-      height: 100%;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-      color: white;
-      overflow-x: hidden;
+    html { scroll-behavior: smooth; }
+    html.text-large { font-size: 19px; }
+    html.text-large body { font-size: 1.05rem; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .stars, .stars2, .stars3 {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      background: transparent url('https://raw.githubusercontent.com/EmilyCS-hub/EmilyCS-hub.github.io/main/stars.png') repeat;
-      animation: moveStars 200s linear infinite;
-      z-index: 0;
+    h1, h2, h3, .display {
+      font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
     }
 
-    .stars2 {
-      background-image: url('https://raw.githubusercontent.com/EmilyCS-hub/EmilyCS-hub.github.io/main/stars2.png');
-      animation-duration: 300s;
+    a { color: var(--teal); }
+    a:hover { color: var(--teal-dark); }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
     }
 
-    .stars3 {
-      background-image: url('https://raw.githubusercontent.com/EmilyCS-hub/EmilyCS-hub.github.io/main/stars3.png');
-      animation-duration: 500s;
-    }
-
-    @keyframes moveStars {
-      from { transform: translateY(0); }
-      to { transform: translateY(-1000px); }
-    }
-
-    .content {
-      position: relative;
-      z-index: 1;
-      padding: 4rem 2rem;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 3em;
-      color: #ffe9c6;
-      margin-bottom: 1rem;
-    }
-
-    p {
-      font-size: 1.2em;
-      color: #ccc;
-    }
-
-    a {
-      display: inline-block;
-      margin-top: 1.5rem;
-      padding: 0.6rem 1.5rem;
-      background-color: #7b2cbf;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      transition: background 0.3s ease;
-    }
-
-    a:hover {
-      background-color: #5a189a;
-    }
-
-    .planet-gallery {
-      margin-top: 4rem;
-      overflow-x: auto;
-      white-space: nowrap;
-      padding: 2rem;
-    }
-
-    .planet {
-      display: inline-block;
-      margin: 0 1rem;
-      width: 200px;
-      cursor: pointer;
-    }
-
-    .planet img {
-      width: 100%;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-      transition: transform 0.3s ease;
-    }
-
-    .planet img:hover {
-      transform: scale(1.1);
-    }
-
-    .planet-name {
-      margin-top: 0.5rem;
-      color: #eee;
-      font-weight: bold;
-    }
-
-    /* Modal styles */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 10;
-      left: 0;
+    /* Navigation */
+    nav {
+      position: sticky;
       top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.8);
-      justify-content: center;
+      z-index: 50;
+      background: rgba(253, 250, 245, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 1.5rem;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .brand .dot {
+      width: 11px; height: 11px;
+      border-radius: 50%;
+      background: var(--coral);
+      display: inline-block;
+    }
+    .nav-links {
+      display: flex;
+      gap: 0.25rem;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 0.92rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 8px;
+    }
+    .nav-links a:hover { background: var(--teal-soft); color: var(--teal-dark); }
+    .a11y-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 0.45rem 0.8rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .a11y-btn:hover { border-color: var(--teal); color: var(--teal-dark); }
+
+    /* Hero */
+    header.hero {
+      padding: 4.5rem 0 3rem;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 3rem;
       align-items: center;
     }
-
-    .modal-content {
-      background: #1a1a2e;
-      color: white;
-      padding: 2rem;
-      border-radius: 12px;
-      max-width: 400px;
+    @media (max-width: 760px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+    .hero-photo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .hero-photo img {
+      width: 100%;
+      max-width: 380px;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 24px;
+      border: 6px solid #fff;
+      box-shadow: 0 4px 16px rgba(35, 33, 43, 0.12), 0 24px 48px rgba(35, 33, 43, 0.14);
+    }
+    .hero-photo figcaption {
+      margin-top: 0.75rem;
       text-align: center;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--teal-soft);
+      color: var(--teal-dark);
+      font-weight: 600;
+      font-size: 0.82rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    h1.display {
+      font-size: clamp(2.6rem, 7vw, 4.6rem);
+      font-weight: 700;
+      margin: 1.25rem 0 0.75rem;
+      color: var(--ink);
+    }
+    h1.display .accent { color: var(--coral); }
+    .tagline {
+      font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+      color: var(--muted);
+      max-width: 46rem;
+      font-weight: 400;
+    }
+    .meta {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.75rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .meta strong { color: var(--ink); font-weight: 600; }
+
+    /* Award badges */
+    .awards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .award {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.3rem;
+      box-shadow: var(--shadow);
+    }
+    .award .medal {
+      font-size: 1.9rem;
+      line-height: 1;
+    }
+    .award .award-title { font-weight: 700; font-size: 1rem; }
+    .award .award-sub { color: var(--muted); font-size: 0.88rem; }
+
+    /* Sections */
+    section { padding: 3.5rem 0; }
+    section.alt { background: var(--teal-soft); }
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 0.6rem;
+    }
+    h2 {
+      font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--ink);
+    }
+    .lead {
+      font-size: 1.08rem;
+      color: var(--muted);
+      max-width: 44rem;
+      margin-bottom: 1.75rem;
     }
 
-    .close-btn {
-      margin-top: 1rem;
-      background: #7b2cbf;
-      border: none;
-      padding: 0.5rem 1.2rem;
-      color: white;
-      border-radius: 6px;
+    /* Stats */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.1rem;
+      margin: 2rem 0;
+    }
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .stat .num {
+      font-family: 'Fraunces', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--teal);
+      line-height: 1;
+    }
+    .stat .num.coral { color: var(--coral); }
+    .stat .lbl { margin-top: 0.5rem; color: var(--muted); font-size: 0.95rem; }
+
+    /* Cards */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.1rem;
+      margin-top: 1.5rem;
+    }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .card h3 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+    .card .icon { font-size: 1.6rem; margin-bottom: 0.6rem; }
+    .card p { color: var(--muted); font-size: 0.97rem; }
+
+    /* Command list */
+    .commands {
+      background: var(--ink);
+      color: #f4f1ea;
+      border-radius: var(--radius);
+      padding: 1.75rem 2rem;
+      margin-top: 1.5rem;
+    }
+    .commands .commands-title {
+      color: #9fe3de;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      margin-bottom: 1rem;
+    }
+    .commands ul {
+      list-style: none;
+      display: grid;
+      gap: 0.6rem;
+    }
+    .commands li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      font-size: 1.05rem;
+    }
+    .commands li::before {
+      content: "\201C";
+      color: var(--coral);
+      font-weight: 700;
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    /* Two-column */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .two-col { grid-template-columns: 1fr; }
+      .nav-inner { flex-wrap: wrap; }
+    }
+
+    .callout {
+      background: var(--coral-soft);
+      border-left: 4px solid var(--coral);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .callout p { color: #6b3a2a; font-size: 0.98rem; }
+
+    /* Result bars */
+    .bar-row { margin-bottom: 1.1rem; }
+    .bar-row .bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.92rem;
+      margin-bottom: 0.35rem;
+      font-weight: 500;
+    }
+    .bar-track {
+      height: 12px;
+      background: #efe9df;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--teal), #3a9a92);
+    }
+
+    /* Figures */
+    .figure { margin-top: 2rem; }
+    .figure img {
+      width: 100%;
+      max-width: 720px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      background: #fff;
+    }
+    .figure figcaption {
+      margin-top: 0.6rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+      max-width: 720px;
+    }
+    .figure.narrow img { max-width: 440px; }
+    .figure.narrow figcaption { max-width: 440px; }
+    .figure.wide img { max-width: 100%; }
+    .figure.wide figcaption { max-width: 100%; }
+
+    .ack-compact { list-style: none; display: grid; gap: 0.7rem; }
+    .ack-compact li { font-size: 0.95rem; color: var(--muted); }
+    .ack-compact .role { color: var(--coral); font-weight: 600; }
+    .ack-compact .name { font-weight: 700; color: var(--ink); }
+
+    /* Demo reel — retro VCD player */
+    .demo-player {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      background: #1a1720;
+      border: 1px solid #2a2532;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(20, 18, 26, 0.35);
+      margin-top: 1.5rem;
+    }
+    @media (max-width: 820px) {
+      .demo-player { grid-template-columns: 1fr; }
+    }
+    .demo-menu {
+      background: #221e2b;
+      padding: 1.5rem 1rem;
+      border-right: 1px solid #332c40;
+    }
+    @media (max-width: 820px) {
+      .demo-menu { border-right: none; border-bottom: 1px solid #332c40; }
+    }
+    .demo-menu-title {
+      color: #9fe3de;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      margin: 0 0.5rem 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .track-list { list-style: none; display: grid; gap: 0.35rem; }
+    .track-btn {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 2.2rem 1fr auto;
+      align-items: center;
+      gap: 0.7rem;
+      text-align: left;
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      padding: 0.6rem 0.65rem;
       cursor: pointer;
+      color: #cfc9d6;
+      font-family: inherit;
+      transition: all 0.18s ease;
     }
-
-    .close-btn:hover {
-      background-color: #5a189a;
+    .track-btn .num {
+      font-family: 'Fraunces', serif;
+      font-size: 1.05rem;
+      color: #6b647a;
+      text-align: center;
     }
+    .track-btn .t-title { font-weight: 600; font-size: 0.95rem; color: #efeaf3; }
+    .track-btn .t-dur { font-size: 0.8rem; color: #8a8298; }
+    .track-btn:hover { background: #2c2736; }
+    .track-btn.active { background: var(--teal); border-color: var(--teal); }
+    .track-btn.active .num { color: #d8f0ee; }
+    .track-btn.active .t-title { color: #fff; }
+    .track-btn.active .t-dur { color: #cfeae7; }
 
-    .maintenance-banner {
+    .demo-screen {
       position: relative;
-      z-index: 1;
-      max-width: 640px;
-      margin: 1.5rem auto 0;
-      padding: 1rem 1.5rem;
-      background: rgba(123, 44, 191, 0.25);
-      border: 1px solid #7b2cbf;
-      border-radius: 10px;
-      color: #ffe9c6;
-      font-size: 1.1em;
+      background: #100e15;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
     }
+    .screen-bezel {
+      position: relative;
+      background: #000;
+      border-radius: 14px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      box-shadow: inset 0 0 0 1px #2a2532, 0 8px 30px rgba(0, 0, 0, 0.5);
+    }
+    .screen-bezel video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: #000;
+      object-fit: contain;
+    }
+    .screen-bezel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.03) 0px,
+        rgba(255, 255, 255, 0.03) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+    }
+    .screen-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      color: #9fe3de;
+    }
+    .screen-status .now-playing {
+      color: #efeaf3;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+    }
+    .screen-status .now-desc { color: #8a8298; font-size: 0.82rem; margin-top: 0.2rem; }
+    .play-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: var(--coral);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 0.55rem 1.15rem;
+      font-weight: 700;
+      font-family: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.15s ease, background 0.2s ease;
+    }
+    .play-btn:hover { background: #c9684a; transform: translateY(-1px); }
+
+    /* Field notes gallery */
+    .subhead {
+      font-family: 'Fraunces', serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin: 1.75rem 0 0.5rem;
+      color: var(--ink);
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.1rem;
+      margin-top: 1rem;
+    }
+    .gallery figure { margin: 0; }
+    .gallery img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      background: #fff;
+      display: block;
+    }
+    .gallery figcaption {
+      margin-top: 0.6rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 0 3rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+      text-align: center;
+    }
+    footer a { text-decoration: none; }
+    .footer-links { margin-top: 0.75rem; display: flex; gap: 1.25rem; justify-content: center; flex-wrap: wrap; }
+
+    .skip-link {
+      position: absolute; left: -9999px; top: 0;
+      background: var(--teal-dark); color: #fff;
+      padding: 0.6rem 1rem; z-index: 100; border-radius: 0 0 8px 0;
+    }
+    .skip-link:focus { left: 0; }
   </style>
 </head>
 <body>
-  <div class="stars"></div>
-  <div class="stars2"></div>
-  <div class="stars3"></div>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-  <div class="maintenance-banner">
-    <strong>NotOneLess</strong> is in Maintenance, will be back soon.
-  </div>
-
-  <div class="content">
-    <h1>Welcome to Emily's Galaxy</h1>
-    <p>Exploring the stars, one planet at a time.</p>
-    <a href="#gallery">See the Planets</a>
-
-    <div class="planet-gallery" id="gallery">
-      <div class="planet" onclick="showModal('Sun', 'The Sun is the star at the center of the solar system. It provides light and heat to all planets.')">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Solar_sys8.jpg" alt="Sun" />
-        <div class="planet-name">Sun</div>
-      </div>
-      <div class="planet" onclick="showModal('Earth', 'Earth is the third planet from the Sun and the only known planet to support life.')">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/The_Earth_seen_from_Apollo_17.jpg" alt="Earth" />
-        <div class="planet-name">Earth</div>
-      </div>
-      <div class="planet" onclick="showModal('Jupiter', 'Jupiter is the largest planet in the solar system, known for its Great Red Spot.')">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/Jupiter.jpg" alt="Jupiter" />
-        <div class="planet-name">Jupiter</div>
-      </div>
-      <div class="planet" onclick="showModal('Saturn', 'Saturn is famous for its beautiful ring system made of ice and rock particles.')">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Saturn_during_Equinox.jpg" alt="Saturn" />
-        <div class="planet-name">Saturn</div>
-      </div>
+  <nav aria-label="Primary">
+    <div class="nav-inner">
+      <a class="brand" href="#top"><span class="dot"></span>Not One Less</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#problem">Problem</a></li>
+        <li><a href="#solution">Solution</a></li>
+        <li><a href="#demo">Demo</a></li>
+        <li><a href="#survey">Survey</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#field">Field Notes</a></li>
+        <li><a href="#awards">Awards</a></li>
+      </ul>
+      <button class="a11y-btn" id="font-toggle" aria-pressed="false" title="Increase text size">A+ Larger text</button>
     </div>
-  </div>
+  </nav>
 
-  <!-- Modal Popup -->
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <h2 id="modal-title"></h2>
-      <p id="modal-text"></p>
-      <button class="close-btn" onclick="closeModal()">Close</button>
+  <main id="main">
+    <header class="hero container" id="top">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">BASEF 2026 · Engineering &amp; Computing</span>
+          <h1 class="display">Not <span class="accent">One</span> Less</h1>
+          <p class="tagline">A voice-first, privacy-aware, multilingual AI assistant that helps seniors and people with disabilities complete everyday digital tasks independently.</p>
+          <div class="meta">
+            <span><strong>Emily Sun</strong></span>
+            <span>Westmount Secondary School, Hamilton, ON</span>
+            <span>Ancaster Meadow Elementary School, Hamilton, ON</span>
+          </div>
+
+          <div class="awards" id="awards">
+            <div class="award">
+              <span class="medal" aria-hidden="true">🥈</span>
+              <div>
+                <div class="award-title">Silver Merit Award</div>
+                <div class="award-sub">Merit Awards</div>
+              </div>
+            </div>
+            <div class="award">
+              <span class="medal" aria-hidden="true">🏅</span>
+              <div>
+                <div class="award-title">BASEF Inspiration Student Award</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <figure class="hero-photo">
+          <img src="materials/2026_on_site_picture.jpg" alt="Emily Sun presenting Not One Less at the BASEF 2026 fair" />
+          <figcaption>Presenting Not One Less at the BASEF 2026 fair</figcaption>
+        </figure>
+      </div>
+    </header>
+
+    <!-- About -->
+    <section id="about" class="container">
+      <div class="section-label">About</div>
+      <h2>A voice that leaves no one behind</h2>
+      <p class="lead">
+        Artificial intelligence has reshaped how we work, study, and live — yet the aging population and people
+        with disabilities are too often left out of its benefits, held back by accessibility barriers and privacy
+        concerns. <strong>Not One Less</strong> closes that gap.
+      </p>
+      <div class="cards">
+        <div class="card">
+          <div class="icon" aria-hidden="true">🎙️</div>
+          <h3>Voice-first</h3>
+          <p>Natural speech commands replace complex typing, tapping, and navigation, reducing cognitive load.</p>
+        </div>
+        <div class="card">
+          <div class="icon" aria-hidden="true">🔒</div>
+          <h3>Privacy-aware</h3>
+          <p>Local processing, data minimization, and user-approved actions keep people in control at every step.</p>
+        </div>
+        <div class="card">
+          <div class="icon" aria-hidden="true">🌍</div>
+          <h3>Multilingual</h3>
+          <p>Language support extends access to non-English-speaking users so no one is excluded.</p>
+        </div>
+      </div>
+      <div class="callout">
+        <p><strong>Our goal:</strong> help users manage email, summarize news, and update calendars through natural
+        voice commands — safely, confidently, and independently. The final software will be shared for free.</p>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section id="problem" class="alt">
+      <div class="container">
+        <div class="section-label">The Problem</div>
+        <h2>Digital tasks shouldn't be a barrier</h2>
+        <p class="lead">
+          As essential services move online, many seniors and individuals with disabilities face physical and
+          cognitive challenges that make navigating technology difficult — limiting their independence. Existing
+          assistive tools are often costly, complex, and hard to personalize.
+        </p>
+        <div class="stats">
+          <div class="stat">
+            <div class="num">8.1M</div>
+            <div class="lbl">Canadians aged 65+ (nearly 1 in 5)</div>
+          </div>
+          <div class="stat">
+            <div class="num coral">8.0M</div>
+            <div class="lbl">Canadians living with a disability</div>
+          </div>
+          <div class="stat">
+            <div class="num">1B+</div>
+            <div class="lbl">people worldwide living with a disability</div>
+          </div>
+          <div class="stat">
+            <div class="num coral">2B</div>
+            <div class="lbl">people projected over 60 by 2050</div>
+          </div>
+        </div>
+        <figure class="figure">
+          <img src="materials/accessibility-in-Canada-statistics.png" alt="Statistics on accessibility in Canada, including data on people living with disabilities" />
+          <figcaption>Key accessibility statistics in Canada.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Solution -->
+    <section id="solution" class="container">
+      <div class="section-label">The Solution</div>
+      <h2>Meet NOLA — the Not One Less Assistant</h2>
+      <p class="lead">
+        NOLA is a human-centered AI assistant built on Microsoft Research's Magentic-UI framework and extended with
+        voice interaction, tool integrations, and safety mechanisms.
+      </p>
+      <div class="cards">
+        <div class="card">
+          <div class="icon" aria-hidden="true">🗣️</div>
+          <h3>Speech-to-text &amp; text-to-speech</h3>
+          <p>Transcribed commands are confirmed before acting, and answers can be spoken aloud.</p>
+        </div>
+        <div class="card">
+          <div class="icon" aria-hidden="true">✅</div>
+          <h3>Human-in-the-loop controls</h3>
+          <p>Explicit approval before irreversible actions — sending email, sharing calendars, or placing orders.</p>
+        </div>
+        <div class="card">
+          <div class="icon" aria-hidden="true">🧰</div>
+          <h3>Connected services</h3>
+          <p>Gmail and Google Calendar integrations through Model Context Protocol (MCP) servers.</p>
+        </div>
+        <div class="card">
+          <div class="icon" aria-hidden="true">🛡️</div>
+          <h3>Private local execution</h3>
+          <p>Isolated Docker containers and a VNC sandbox keep data processing local and secure.</p>
+        </div>
+        <div class="card">
+          <div class="icon" aria-hidden="true">⚡</div>
+          <h3>Easy Service &amp; Quick Chat</h3>
+          <p>One-tap shortcuts to common tasks, plus low-latency conversational help.</p>
+        </div>
+        <div class="card">
+          <div class="icon" aria-hidden="true">🖐️</div>
+          <h3>Take Control</h3>
+          <p>Users can pause, correct, or take over the assistant at any time.</p>
+        </div>
+      </div>
+
+      <div class="commands">
+        <div class="commands-title">Example voice commands</div>
+        <ul>
+          <li>Summarize this article.</li>
+          <li>Read my latest email.</li>
+          <li>Reply: I'll be there at 2 PM.</li>
+          <li>What's on my calendar today?</li>
+          <li>Remind me to take my medication.</li>
+          <li>Order milk and bread.</li>
+        </ul>
+      </div>
+
+      <div class="two-col">
+        <figure class="figure">
+          <img src="materials/assets/ask-easy-res.png" alt="Screenshot of the Not One Less Assistant 'Ask Easy' results view" />
+          <figcaption>The Not One Less Assistant's "Ask Easy" results view.</figcaption>
+        </figure>
+
+        <figure class="figure">
+          <img src="materials/assets/easy-service-list.png" alt="Screenshot of the Not One Less Assistant 'Easy Service' list" />
+          <figcaption>The Not One Less Assistant's "Easy Service" list.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Demo -->
+    <section id="demo" class="alt">
+      <div class="container">
+        <div class="section-label">Demo Reel</div>
+        <h2>Watch NOLA in action</h2>
+        <p class="lead">
+          Seven real screen recordings show what NOLA can already do — from reading a bill aloud to ordering
+          groceries hands-free. Pick a track to play it.
+        </p>
+
+        <div class="demo-player">
+          <div class="demo-menu">
+            <div class="demo-menu-title"><span aria-hidden="true">▶</span> Select a film</div>
+            <ul class="track-list" id="track-list"></ul>
+          </div>
+          <div class="demo-screen">
+            <div class="screen-bezel">
+              <video id="demo-video" playsinline preload="metadata" controls></video>
+            </div>
+            <div class="screen-status">
+              <div>
+                <div class="now-playing" id="now-playing">Choose a track to begin</div>
+                <div class="now-desc" id="now-desc">Select a film from the menu to see NOLA in action.</div>
+              </div>
+              <button class="play-btn" id="play-btn" aria-label="Play">▶ Play</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Survey -->
+    <section id="survey" class="alt">
+      <div class="container">
+        <div class="section-label">User Needs Survey</div>
+        <h2>Built on real user needs</h2>
+        <div class="two-col">
+          <div>
+            <p class="lead">
+              I conducted <strong>19 in-person surveys</strong> with seniors and people with disabilities across
+              Dundas, Hamilton, and London (plus online responses in English and French). Their priorities directly
+              shaped NOLA's features.
+            </p>
+            <div class="bar-row">
+              <div class="bar-label"><span>Managing calendars</span><span>27%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width: 27%;"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label"><span>Summarizing / reading news</span><span>27%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width: 27%;"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label"><span>Drafting emails hands-free</span><span>23%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width: 23%;"></div></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label"><span>Online ordering</span><span>9%</span></div>
+              <div class="bar-track"><div class="bar-fill" style="width: 9%;"></div></div>
+            </div>
+          </div>
+          <div>
+            <p class="lead">
+              The top concern was <strong>privacy</strong> — which is why NOLA requires user approval before every
+              sensitive action.
+            </p>
+            <figure class="figure">
+              <img src="materials/difficulty_using_ict_REPORT.png" alt="Survey results showing how difficult participants find using a phone or computer for everyday tasks such as reading, searching online, or opening apps" />
+              <figcaption>Many participants find using phones or computers for everyday tasks difficult.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <figure class="figure wide">
+          <img src="materials/assets/images/survey-1.jpg" alt="A completed paper survey collected from a participant during the in-person user needs research" loading="lazy" />
+          <figcaption>A completed survey collected in person — one of the responses that shaped NOLA's priorities.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- User Experience -->
+    <section id="experience" class="container">
+      <div class="section-label">User Experience</div>
+      <h2>Validated with real users</h2>
+      <p class="lead">
+        After building NOLA, we invited users to test the assistant first-hand, then complete a follow-up
+        user-experience survey. The results confirm that NOLA is easy, accessible, and helps people complete
+        tasks more independently.
+      </p>
+      <div class="two-col">
+        <div>
+          <figure class="figure">
+            <img src="materials/user_experience_rating_REPORT.png" alt="User experience survey results rating satisfaction, confidence, and accessibility when using NOLA" />
+            <figcaption>User experience ratings after testing NOLA.</figcaption>
+          </figure>
+        </div>
+        <div>
+          <div class="callout">
+            <p><strong>Pilot study (n=4):</strong> satisfaction &amp; usability averaged <strong>4.4/5</strong>,
+            accessibility &amp; comfort <strong>4.5/5</strong>, and confidence in completing tasks
+            <strong>4.75/5</strong>.</p>
+          </div>
+          <p class="lead" style="margin-top: 1.25rem;">
+            Participants described NOLA as <strong>helpful, calming, connected, and convenient</strong> — while
+            highlighting navigation speed as an area to keep improving.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Field Notes -->
+    <section id="field" class="container">
+      <div class="section-label">Field Notes</div>
+      <h2>Tested with real people, not just in theory</h2>
+      <p class="lead">
+        Beyond the code and the survey data, NOLA has been taken out into the world — demoed at the 2026 BASEF
+        science fair and reviewed hands-on with older adults who shared their feedback, suggestions, and
+        encouragement.
+      </p>
+
+      <h3 class="subhead">At the 2026 BASEF science fair</h3>
+      <div class="gallery">
+        <figure>
+          <img src="materials/assets/images/present-1.jpg" alt="Emily Sun presenting the Not One Less project at the 2026 BASEF science fair" loading="lazy" />
+          <figcaption>Presenting Not One Less to visitors at BASEF 2026.</figcaption>
+        </figure>
+        <figure>
+          <img src="materials/assets/images/present-2.jpg" alt="Emily Sun explaining the Not One Less assistant at the 2026 BASEF science fair" loading="lazy" />
+          <figcaption>Explaining how NOLA works at the fair.</figcaption>
+        </figure>
+        <figure>
+          <img src="materials/assets/images/present-3.jpg" alt="Emily Sun sharing the Not One Less project with visitors at the 2026 BASEF science fair" loading="lazy" />
+          <figcaption>Sharing the project with fair visitors.</figcaption>
+        </figure>
+        <figure>
+          <img src="materials/assets/images/present-4.jpg" alt="Emily Sun at the Not One Less booth during the 2026 BASEF science fair" loading="lazy" />
+          <figcaption>At the Not One Less booth.</figcaption>
+        </figure>
+      </div>
+
+      <h3 class="subhead">Reviewing NOLA with older adults and mentor</h3>
+      <div class="gallery">
+        <figure>
+          <img src="materials/assets/images/preview-1.jpg" alt="An older adult reviewing the Not One Less assistant and giving feedback" loading="lazy" />
+          <figcaption>A participant tries NOLA and shares feedback.</figcaption>
+        </figure>
+        <figure>
+          <img src="materials/assets/images/preview-2.jpg" alt="An older adult giving suggestions on the Not One Less assistant" loading="lazy" />
+          <figcaption>Listening to suggestions during a review session.</figcaption>
+        </figure>
+        <figure>
+          <img src="materials/assets/images/mentor-discussion-1.jpg" alt="Emily Sun discussing the Not One Less project with a mentor" loading="lazy" />
+          <figcaption>Discussing NOLA with a mentor.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Future -->
+    <section id="future" class="alt">
+      <div class="container">
+        <div class="section-label">Future Directions</div>
+        <h2>Where NOLA goes next</h2>
+        <div class="cards">
+          <div class="card">
+            <div class="icon" aria-hidden="true">🚀</div>
+            <h3>Near-term</h3>
+            <p>Near-real-time responses with latency under five seconds to build trust and avoid confusion.</p>
+          </div>
+          <div class="card">
+            <div class="icon" aria-hidden="true">🎛️</div>
+            <h3>Mid-term</h3>
+            <p>Highly adaptable visual interfaces, customizable voice interactions, and deep personalization.</p>
+          </div>
+          <div class="card">
+            <div class="icon" aria-hidden="true">🤝</div>
+            <h3>Long-term</h3>
+            <p>Consent-based memory and a companion-like persona to combat social isolation and support guided learning.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Acknowledgements -->
+    <section id="thanks" class="container">
+      <div class="section-label">Acknowledgements</div>
+      <h2>With heartfelt thanks</h2>
+      <div class="card">
+        <ul class="ack-compact">
+          <li><span class="role">Mentor:</span> <span class="name">Dr. Fanwang Meng</span> — Queen's University &amp; MIT</li>
+          <li><span class="role">Teacher:</span> <span class="name">Ms. Rebecca Mcewen</span> — Ancaster Meadow Elementary School</li>
+          <li><span class="role">Support:</span> <span class="name">My family</span> — for a safe and supportive space to learn</li>
+          <li><span class="role">Opportunity:</span> <span class="name">BASEF</span> — for encouraging young students to explore science and give back</li>
+          <li><span class="role">Framework:</span> <span class="name">Microsoft</span> — for the open-source <a href="https://github.com/microsoft/magentic-ui" target="_blank" rel="noopener">Magentic-UI</a> framework and the open-source <a href="https://www.microsoft.com/en-us/research/blog/fara-7b-an-efficient-agentic-model-for-computer-use/" target="_blank" rel="noopener">Fara-7B</a> model that Not One Less is built on</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p><strong>Not One Less</strong> — a voice-first, privacy-aware, multilingual AI assistant for accessible digital tasks.</p>
+      <div class="footer-links">
+        <a href="#about">About</a>
+        <a href="#solution">Solution</a>
+        <a href="#demo">Demo</a>
+        <a href="#survey">Survey</a>
+        <a href="#experience">Experience</a>
+        <a href="#field">Field Notes</a>
+        <a href="https://www.basef.ca/fair/project-view.php?PN=Q04&ProjectID=16729" target="_blank" rel="noopener">BASEF project page</a>
+      </div>
+      <p style="margin-top: 1rem;">© <span id="year"></span> Emily Sun</p>
     </div>
-  </div>
+  </footer>
 
   <script>
-    function showModal(title, text) {
-      document.getElementById("modal-title").textContent = title;
-      document.getElementById("modal-text").textContent = text;
-      document.getElementById("modal").style.display = "flex";
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const toggle = document.getElementById('font-toggle');
+    toggle.addEventListener('click', () => {
+      const large = document.documentElement.classList.toggle('text-large');
+      toggle.setAttribute('aria-pressed', String(large));
+      toggle.textContent = large ? 'A− Normal text' : 'A+ Larger text';
+    });
+
+    const tracks = [
+      { file: "materials/assets/videos/easy-ask-voice.mp4", title: "Ask Easy", dur: "0:36", desc: "Ask a question and hear the answer spoken back." },
+      { file: "materials/assets/videos/morning-brief-voice.mp4", title: "Morning Brief", dur: "0:37", desc: "A spoken summary to start your day." },
+      { file: "materials/assets/videos/email-summary.mp4", title: "Summarize Email", dur: "0:12", desc: "Hear the gist of your latest email." },
+      { file: "materials/assets/videos/news-headlines.mp4", title: "News Headlines", dur: "0:16", desc: "Top stories, read aloud." },
+      { file: "materials/assets/videos/pdf-read.mp4", title: "Read a PDF", dur: "0:37", desc: "Listen to a document instead of reading it." },
+      { file: "materials/assets/videos/bill-read.mp4", title: "Read a Bill", dur: "0:18", desc: "A utility bill, read and explained." },
+      { file: "materials/assets/videos/online-order.mp4", title: "Online Ordering", dur: "0:19", desc: "Order groceries by voice, with approval." }
+    ];
+
+    const trackList = document.getElementById('track-list');
+    const video = document.getElementById('demo-video');
+    const nowPlaying = document.getElementById('now-playing');
+    const nowDesc = document.getElementById('now-desc');
+    const playBtn = document.getElementById('play-btn');
+    let current = 0;
+
+    tracks.forEach((t, i) => {
+      const li = document.createElement('li');
+      const btn = document.createElement('button');
+      btn.className = 'track-btn';
+      btn.innerHTML = '<span class="num">' + String(i + 1).padStart(2, '0') + '</span>' +
+        '<span class="t-title">' + t.title + '</span>' +
+        '<span class="t-dur">' + t.dur + '</span>';
+      btn.addEventListener('click', () => select(i));
+      li.appendChild(btn);
+      trackList.appendChild(li);
+    });
+
+    function setPlaying(playing) {
+      playBtn.textContent = playing ? '⏸ Pause' : '▶ Play';
+      playBtn.setAttribute('aria-label', playing ? 'Pause' : 'Play');
     }
 
-    function closeModal() {
-      document.getElementById("modal").style.display = "none";
-    }
-
-    // Optional: Close modal if user clicks outside content
-    window.onclick = function(event) {
-      const modal = document.getElementById("modal");
-      if (event.target === modal) {
-        closeModal();
+    function select(i, autoplay = true) {
+      current = i;
+      const t = tracks[i];
+      if (video.getAttribute('src') !== t.file) {
+        video.src = t.file;
+      }
+      nowPlaying.textContent = t.title + ' · ' + t.dur;
+      nowDesc.textContent = t.desc;
+      document.querySelectorAll('.track-btn').forEach((b, j) => {
+        b.classList.toggle('active', j === i);
+      });
+      if (autoplay) {
+        video.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+      } else {
+        setPlaying(false);
       }
     }
+
+    playBtn.addEventListener('click', () => {
+      if (video.paused) {
+        video.play().then(() => setPlaying(true)).catch(() => {});
+      } else {
+        video.pause();
+        setPlaying(false);
+      }
+    });
+
+    video.addEventListener('play', () => setPlaying(true));
+    video.addEventListener('pause', () => setPlaying(false));
+    video.addEventListener('ended', () => {
+      if (current < tracks.length - 1) select(current + 1);
+    });
+
+    select(0, false);
   </script>
 </body>
 </html>
