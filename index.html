@@ -577,9 +577,9 @@
       <a class="brand" href="#top"><span class="dot"></span>Not One Less</a>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
+        <li><a href="#demo">Demo</a></li>
         <li><a href="#problem">Problem</a></li>
         <li><a href="#solution">Solution</a></li>
-        <li><a href="#demo">Demo</a></li>
         <li><a href="#survey">Survey</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#field">Field Notes</a></li>
@@ -655,6 +655,35 @@
       <div class="callout">
         <p><strong>Our goal:</strong> help users manage email, summarize news, and update calendars through natural
         voice commands — safely, confidently, and independently. The final software will be shared for free.</p>
+      </div>
+    </section>
+
+    <!-- Demo -->
+    <section id="demo" class="container">
+      <div class="section-label">Demo Reel</div>
+      <h2>Watch NOLA in action</h2>
+      <p class="lead">
+        Seven real screen recordings show what NOLA can already do — from reading a bill aloud to ordering
+        groceries hands-free. Pick a track to play it.
+      </p>
+
+      <div class="demo-player">
+        <div class="demo-menu">
+          <div class="demo-menu-title"><span aria-hidden="true">▶</span> Select a film</div>
+          <ul class="track-list" id="track-list"></ul>
+        </div>
+        <div class="demo-screen">
+          <div class="screen-bezel">
+            <video id="demo-video" playsinline preload="metadata" controls></video>
+          </div>
+          <div class="screen-status">
+            <div>
+              <div class="now-playing" id="now-playing">Choose a track to begin</div>
+              <div class="now-desc" id="now-desc">Select a film from the menu to see NOLA in action.</div>
+            </div>
+            <button class="play-btn" id="play-btn" aria-label="Play">▶ Play</button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -756,37 +785,6 @@
           <img src="materials/assets/easy-service-list.png" alt="Screenshot of the Not One Less Assistant 'Easy Service' list" />
           <figcaption>The Not One Less Assistant's "Easy Service" list.</figcaption>
         </figure>
-      </div>
-    </section>
-
-    <!-- Demo -->
-    <section id="demo" class="alt">
-      <div class="container">
-        <div class="section-label">Demo Reel</div>
-        <h2>Watch NOLA in action</h2>
-        <p class="lead">
-          Seven real screen recordings show what NOLA can already do — from reading a bill aloud to ordering
-          groceries hands-free. Pick a track to play it.
-        </p>
-
-        <div class="demo-player">
-          <div class="demo-menu">
-            <div class="demo-menu-title"><span aria-hidden="true">▶</span> Select a film</div>
-            <ul class="track-list" id="track-list"></ul>
-          </div>
-          <div class="demo-screen">
-            <div class="screen-bezel">
-              <video id="demo-video" playsinline preload="metadata" controls></video>
-            </div>
-            <div class="screen-status">
-              <div>
-                <div class="now-playing" id="now-playing">Choose a track to begin</div>
-                <div class="now-desc" id="now-desc">Select a film from the menu to see NOLA in action.</div>
-              </div>
-              <button class="play-btn" id="play-btn" aria-label="Play">▶ Play</button>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 
